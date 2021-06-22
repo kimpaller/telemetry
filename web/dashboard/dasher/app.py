@@ -75,7 +75,9 @@ def board(board_name):
             "Linux Booted": test.linux_prompt_reached,
             "Linux Tests": {"dmesg_errors": test.dmesg_errors_found, \
                             "drivers_missing": test.drivers_missing},
-            "pyadi Tests": {"pass": str(int(test.pytest_tests) - int(test.pytest_failures)), \
+            "pyadi Tests": {"pass": str(int(test.pytest_tests) \
+                                    - int(test.pytest_failures) \
+                                    - int(test.pytest_skipped)),
                             "fail": test.pytest_failures},
             "Tested branch": test.source_adjacency_matrix,
             "HDL Commit": test.hdl_hash,
