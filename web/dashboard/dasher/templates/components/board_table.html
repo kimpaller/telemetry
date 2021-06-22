@@ -2,7 +2,11 @@
   <thead>
     <tr>
       {% for item in boards[0] %}
-      <th scope="col">{{item}}</th>
+        {% if item=="url" %}
+          <!-- do nothing -->
+        {% else %}
+          <th scope="col">{{item}}</th>
+        {% endif %}
       {% endfor %}
     </tr>
   </thead>
@@ -25,6 +29,10 @@
           {% else %}
           <td></td>
           {% endif %}
+        {% elif k in ["Jenkins Project Name","Jenkins Build Number"] %}
+          <td><a href={{board['url'][k]}}>{{v}}</a></td>
+        {% elif k== "url" %}
+            <!-- do nothing -->
         {% else %}
           <td>{{v}}</td>
         {% endif %}

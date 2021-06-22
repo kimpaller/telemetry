@@ -3,7 +3,11 @@
     <thead>
       <tr>
         {% for item in boards[0] %}
-        <th scope="col">{{item}}</th>
+          {% if item=="url" %}
+            <!-- do nothing -->
+          {% else %}
+            <th scope="col">{{item}}</th>
+          {% endif %}
         {% endfor %}
       </tr>
     </thead>
@@ -19,14 +23,22 @@
             {% endif %}
           {% elif k in ["Linux Tests"] %}
             <td style="font-size: small">
+              <a href={{board['url'][k]}}>
               dmesg errors <br><span class="badge rounded-pill bg-danger">{{v.dmesg_errors}}</span><br>
               missing drivers <br><span class="badge rounded-pill bg-danger">{{v.drivers_missing}}</span>
+              </a>
             </td>
             {% elif k in ["pyadi Tests"] %}
             <td style="font-size: small">
+              <a href={{board['url'][k]}}>
               pass <br><span class="badge rounded-pill bg-success">{{v.pass}}</span><br>
               fail <br><span class="badge rounded-pill bg-danger">{{v.fail}}</span>
+              </a>
             </td>
+          {% elif k in ["Jenkins Project Name","Jenkins Build Number"] %}
+            <td><a href={{board['url'][k]}}>{{v}}</a></td>
+          {% elif k== "url" %}
+            <!-- do nothing -->
           {% else %}
             <td>{{v}}</td>
           {% endif %}

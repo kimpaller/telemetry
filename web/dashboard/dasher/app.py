@@ -2,10 +2,14 @@ from flask import Flask, render_template
 from pages import allboards as ab
 from models import boards as b
 from models import boot_tests as bt
+from utility import url_gen
+
 # from junit2htmlreport import parser
 
 app = Flask(__name__)
 
+JENKINS_SERVER = '10.116.171.86'
+JENKINS_PORT = '8080'
 
 @app.route("/")
 def hello_world():
@@ -32,11 +36,18 @@ def allboards():
             "Board": board.board_name,
             "Status": board.boot_test_result,
             "Jenkins Project Name": board.jenkins_project_name,
-            "Build Number": board.jenkins_build_number,
+            "Jenkins Build Number": board.jenkins_build_number,
             "Tested branch": board.source_adjacency_matrix,
             "HDL Commit": board.hdl_hash,
             "Linux Commit": board.linux_hash,
-            "Failure reason": 'None' if len(board.boot_test_failure) == 0 else board.boot_test_failure
+            "Failure reason": 'None' if len(board.boot_test_failure) == 0 else board.boot_test_failure,
+            "url" : url_gen(
+                JENKINS_SERVER,
+                JENKINS_PORT,
+                board.jenkins_project_name,
+                board.jenkins_build_number,
+                board.board_name,
+            )
         }
         for board in boards_ref
     ]
@@ -73,7 +84,14 @@ def board(board_name):
             "Jenkins Build Number": test.jenkins_build_number,
             "Jenkins Job Date:": test.jenkins_job_date,
             "Failure reason": 'None' if len(test.boot_test_failure) == 0 \
-                                    else test.boot_test_failure
+                                    else test.boot_test_failure,
+            "url" : url_gen(
+                JENKINS_SERVER,
+                JENKINS_PORT,
+                test.jenkins_project_name,
+                test.jenkins_build_number,
+                board_name,
+            )
         }
         for test in boot_tests
     ]
