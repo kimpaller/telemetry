@@ -28,7 +28,8 @@ def allboards():
     #retrieve boards from elastic server
     #filter by jenkins_project_name
     jenkins_project_name = "HW_tests/HW_test_multiconfig"
-    boards_ref = b.Boards(jenkins_project_name).boards
+    source_adjacency_matrix = "boot_partition_master"
+    boards_ref = b.Boards(jenkins_project_name, source_adjacency_matrix).boards
     headers = ["Board", "Status"]
     boards = [
         {

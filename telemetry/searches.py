@@ -15,7 +15,7 @@ class searches:
         loc = os.path.dirname(__file__)
         return os.path.join(loc, "resources", name)
 
-    def boot_tests(self, boot_folder_name=None, jenkins_project_name=None):
+    def boot_tests(self, boot_folder_name=None, jenkins_project_name=None, source_adjacency_matrix=None):
         """ Query boot test results from elasticsearch """
         index = "boot_tests" if not self.use_test_index else "dummy"
         s = []
@@ -24,6 +24,10 @@ class searches:
 
         if jenkins_project_name:
             s.append({"match": {"jenkins_project_name": jenkins_project_name}})
+
+        if source_adjacency_matrix:
+            s.append({"match": {"source_adjacency_matrix": source_adjacency_matrix}})
+
         # Create query
         if s:
             query = {

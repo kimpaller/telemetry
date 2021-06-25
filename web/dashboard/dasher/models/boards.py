@@ -45,12 +45,12 @@ class Board(BootTest):
     
 
 class Boards:
-    def __init__(self, jenkins_project_name=None):
+    def __init__(self, jenkins_project_name=None, source_adjacency_matrix=None):
         
         db_res = telemetry.searches(mode=MODE, server=ELASTIC_SERVER)
         # create boards object from raw db_res
         boot_folder_name = None
-        self._boards = [ Board(bn, bi[0]) for bn, bi in db_res.boot_tests(boot_folder_name, jenkins_project_name).items() ]
+        self._boards = [ Board(bn, bi[0]) for bn, bi in db_res.boot_tests(boot_folder_name, jenkins_project_name, source_adjacency_matrix).items() ]
 
     @property
     def boards(self):
