@@ -24,15 +24,25 @@
           {% elif k in ["Linux Tests"] %}
             <td style="font-size: small">
               <a href={{board['url'][k]}}>
-              dmesg errors <br><span class="badge rounded-pill bg-danger">{{v.dmesg_errors}}</span><br>
-              missing drivers <br><span class="badge rounded-pill bg-danger">{{v.drivers_missing}}</span>
+                {% if (v.dmesg_errors == "0" and v.drivers_missing == "0") %}
+                  dmesg errors <br><span class="badge rounded-pill bg-success">{{v.dmesg_errors}}</span><br>
+                  missing drivers <br><span class="badge rounded-pill bg-success">{{v.drivers_missing}}</span>
+                {% else %}
+                  dmesg errors <br><span class="badge rounded-pill bg-danger">{{v.dmesg_errors}}</span><br>
+                  missing drivers <br><span class="badge rounded-pill bg-danger">{{v.drivers_missing}}</span>
+                {% endif %}
               </a>
             </td>
             {% elif k in ["pyadi Tests"] %}
             <td style="font-size: small">
               <a href={{board['url'][k]}}>
-              pass <br><span class="badge rounded-pill bg-success">{{v.pass}}</span><br>
-              fail <br><span class="badge rounded-pill bg-danger">{{v.fail}}</span>
+                {% if v.fail == "0" %}
+                  pass <br><span class="badge rounded-pill bg-success">{{v.pass}}</span><br>
+                  fail <br><span class="badge rounded-pill bg-success">{{v.fail}}</span>
+                {% else %}
+                  pass <br><span class="badge rounded-pill bg-danger">{{v.pass}}</span><br>
+                  fail <br><span class="badge rounded-pill bg-danger">{{v.fail}}</span>
+                {% endif %}
               </a>
             </td>
           {% elif k in ["Jenkins Project Name","Jenkins Build Number"] %}
