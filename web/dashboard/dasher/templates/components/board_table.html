@@ -29,8 +29,16 @@
           {% else %}
           <td></td>
           {% endif %}
-        {% elif k in ["Jenkins Project Name","Jenkins Build Number"] %}
-          <td><a href={{board['url'][k]}}>{{v}}</a></td>
+        {% elif k in ["Jenkins Project Name",
+                      "Jenkins Build Number",
+                      "HDL Commit",
+                      "Linux Commit"]
+        %}
+          {% if not board['url'][k] == "NA" %}
+            <td><a href={{board['url'][k]}}>{{v}}</a></td>
+          {% else %}
+            <td>{{v}}</td>
+          {% endif %}
         {% elif k== "url" %}
             <!-- do nothing -->
         {% else %}

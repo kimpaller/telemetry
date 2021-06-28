@@ -48,6 +48,8 @@ def allboards():
                 board.jenkins_project_name,
                 board.jenkins_build_number,
                 board.board_name,
+                board.hdl_hash.split('\s')[0].strip(),
+                board.linux_hash.split('\s')[0].strip()
             )
         }
         for board in boards_ref
@@ -94,6 +96,8 @@ def board(board_name):
                 test.jenkins_project_name,
                 test.jenkins_build_number,
                 board_name,
+                test.hdl_hash.split('\s')[0].strip(),
+                test.linux_hash.split('\s')[0].strip()
             )
         }
         for test in boot_tests
